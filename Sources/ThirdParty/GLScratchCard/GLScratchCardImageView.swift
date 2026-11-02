@@ -114,7 +114,8 @@ public class GLScratchCardImageView: UIImageView {
         let currentLocation = touch.location(in: self)
         eraseBetween(fromPoint: point, currentPoint: currentLocation)
         
-        currentScratchPercentage = alphaOnlyPersentage(img: img) * 100
+        // Changes in GLScratchCardImageView: measure the image after this erase, not the one before it
+        currentScratchPercentage = alphaOnlyPersentage(img: image ?? img) * 100
         
         if currentScratchPercentage >= 100 && !isScratchEnded {
             scratchEnded()
