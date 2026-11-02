@@ -35,9 +35,12 @@ Sources/
 ├── ContentView.swift      # Demo screen: card, brush slider, progress
 ├── ScratchView.swift      # SwiftUI wrapper around the scratch view
 ├── AutoScratch.swift      # Automatic scratch animation
+├── ScratchProgress.swift  # Reveal maths: scratched share, threshold, progress bar
 ├── Resources/             # Scratch cover image
 └── ThirdParty/
     └── GLScratchCard/     # GLScratchCardImageView (scratch rendering)
+Tests/
+└── AppTests/              # Reveal maths, scratch view and auto-scratch path
 ```
 
 ## Third-party code
