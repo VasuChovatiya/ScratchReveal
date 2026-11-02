@@ -46,9 +46,9 @@ jobs:
           echo "Using simulator $udid"
           echo "DESTINATION=id=$udid" >> "$GITHUB_ENV"
 
-      - name: Build
+      - name: Build and test
         run: |
-          xcodebuild build \
+          xcodebuild test \
             -scheme ScratchReveal \
             -destination "$DESTINATION" \
             -derivedDataPath DerivedData \
