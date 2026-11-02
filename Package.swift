@@ -17,6 +17,7 @@ let package = Package(
         )
     ],
     targets: [
-        .executableTarget(name: "App", path: "Sources", resources: [.process("Resources")])
+        .executableTarget(name: "App", path: "Sources", resources: [.process("Resources")]),
+        .testTarget(name: "AppTests", dependencies: ["App"], path: "Tests/AppTests"),
     ]
 )
