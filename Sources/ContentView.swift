@@ -15,6 +15,9 @@ private let prizes: [Prize] = [
 ]
 
 struct ContentView: View {
+    /// Scratched percentage that reveals the prize once the user pauses.
+    private let revealThreshold: Float = 40
+
     @State private var brush: Double = 36
     @State private var prizeIndex = 0
     @State private var progress = 0.0
@@ -26,7 +29,7 @@ struct ContentView: View {
             Text("Scratch Reveal")
                 .font(.system(.largeTitle, design: .rounded, weight: .bold))
 
-            ScratchView(brushSize: brush, progress: $progress, isRevealed: $revealed) {
+            ScratchView(brushSize: brush, benchMark: revealThreshold, progress: $progress, isRevealed: $revealed) {
                 PrizeView(prize: prizes[prizeIndex])
             }
             .id(cardID)
@@ -36,9 +39,9 @@ struct ContentView: View {
             .padding(.horizontal)
 
             VStack(spacing: 6) {
-                ProgressView(value: min(progress / 0.40, 1))
+                ProgressView(value: ScratchProgress.towardReveal(scratched: progress, threshold: revealThreshold))
                     .tint(revealed ? .green : .accentColor)
-                Text(revealed ? "Revealed!" : "Scratched \(Int(progress * 100))% — reveals at 40% when you pause")
+                Text(revealed ? "Revealed!" : "Scratched \(Int(progress * 100))% — reveals at \(Int(revealThreshold))% when you pause")
                     .font(.footnote).foregroundStyle(.secondary)
             }
             .padding(.horizontal, 28)

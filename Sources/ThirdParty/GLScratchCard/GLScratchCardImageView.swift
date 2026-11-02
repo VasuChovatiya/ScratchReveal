@@ -62,7 +62,7 @@ public class GLScratchCardImageView: UIImageView {
     }
     
     @objc fileprivate func scratchAndShowBottomLayerView() {
-        if currentScratchPercentage >= benchMarkScratchPercentage {
+        if ScratchProgress.revealsOnPause(scratched: currentScratchPercentage, threshold: benchMarkScratchPercentage) {  // Changes in GLScratchCardImageView
             self.image = nil
             scratchEnded()
         }else{
@@ -185,19 +185,11 @@ public class GLScratchCardImageView: UIImageView {
         context.clear(rect)
         context.draw(img.cgImage!, in: rect)
         
-        var alphaOnlyPixels = 0
-        
-        for x in 0..<width {
-            for y in 0..<height {
-                
-                if pixelData[y * width + x] == 0 {
-                    alphaOnlyPixels += 1
-                }
-            }
-        }
-        
+        // Changes in GLScratchCardImageView: the pixel count lives in ScratchProgress so it can be unit tested
+        let fraction = ScratchProgress.clearedFraction(ofAlpha: UnsafeBufferPointer(start: pixelData, count: bitmapByteCount))
+
         free(pixelData)
-        
-        return Float(alphaOnlyPixels) / Float(bitmapByteCount)
+
+        return fraction
     }
 }
